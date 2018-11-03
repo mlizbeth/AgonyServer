@@ -1,6 +1,7 @@
 package io.valhala.agonyredux.display;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -17,11 +18,22 @@ public class ViewManager {
 		mainScene = new Scene(mainPane,WIDTH,HEIGHT);
 		mainStage = new Stage();
 		mainStage.setScene(mainScene);
+		makeBtn();
 	}
 	
 	public Stage getMainStage() {
 		return mainStage;
 	}
 	
-	
+	private void makeBtn() {
+		MenuButton b1 = new MenuButton("New Game");
+
+		mainPane.getChildren().add(b1);
+
+		
+		b1.setLayoutX(250);
+		b1.setLayoutY(250);
+
+	}
+		
 }
