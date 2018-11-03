@@ -29,9 +29,7 @@ public class Game extends Application {
 	CharacterMovement player2 = new CharacterMovement(imageView2);//needs improvement
 	Scene selection;
 	Scene scene;
-	Scene scene2;//needs improvement
 	static Pane root = new Pane();
-	static Pane root2 = new Pane();//needs improvement
 
 	
 	public static void main(String[] args) {
@@ -41,22 +39,21 @@ public class Game extends Application {
 	public void start(Stage primaryStage) throws FileNotFoundException {
 		
 		
-		
 		imageView.setX(640);
 		imageView.setY(512);
-		imageView2.setX(640);//needs improvement
-		imageView2.setY(512);//needs improvement
+		imageView2.setX(0);//needs improvement
+		imageView2.setY(0);//needs improvement
 		root.setPrefSize(1280, 1024);
-		root2.setPrefSize(1280, 1024);//needs improvement
-		//root.getChildren().addAll(player);
-		
+
 		//Character Selection Screen Algorithm
 		Label label1 = new Label("Please choose your character");
 		Button btn1 = new Button("Viking");
 		Button btn2 = new Button("Witch");
+		
 		btn1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				root.getChildren().addAll(player1);
 				primaryStage.setScene(scene);
 				toon =1;
 			}
@@ -64,7 +61,8 @@ public class Game extends Application {
 		btn2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				primaryStage.setScene(scene2);//needs improvement
+				root.getChildren().addAll(player2);
+				primaryStage.setScene(scene);//needs improvement
 				toon = 2;
 			}
 		});
@@ -74,27 +72,17 @@ public class Game extends Application {
 		layout1.setLayoutY(512);
 		layout1.getChildren().addAll(label1, btn1, btn2);
 		selection = new Scene(layout1, 1280, 1024);
-		
-		root2.getChildren().addAll(player2); //needs improvement
-		root.getChildren().addAll(player1);
+
 		scene = new Scene(root);
-		scene2 = new Scene(root2);//needs improvement
 		scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));	
 		scene.setOnKeyReleased(event-> {
 			keys.put(event.getCode(), false);
 		});
 		
-		//needs improvement
-		scene2.setOnKeyPressed(event -> keys.put(event.getCode(), true));
-		scene2.setOnKeyReleased(event-> {
-			keys.put(event.getCode(), false);
-		});
-		
-		
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				if (toon == 1) 
+				if (toon ==1)
 					update(player1);
 				else
 					update(player2);
