@@ -1,5 +1,6 @@
 package io.valhala.agonyserver.framework.entity;
 
+import io.valhala.agonyserver.framework.animations.SpriteAnimation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -7,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class charactermovement extends Pane{
-
+//DFA
 	ImageView imageView;
 	int count = 3;
 	int columns = 3;

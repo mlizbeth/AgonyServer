@@ -26,13 +26,19 @@ public class Game extends Application{
 	
 	public void update() {
 		if (isPressed(KeyCode.UP)) {
-			player.animation.play();
+			//starts the animation of the sprite
+			player.animation.play(); 
+			//picks the bottom Sprite
 			player.animation.setOffsetY(96);
+			//sets the range to decide direction of sprite
 			player.moveY(-2);
 			}
 		else if (isPressed(KeyCode.DOWN)) {
+			//starts the animation of the sprite
 			player.animation.play();
+			//picks the top sprite
 			player.animation.setOffsetY(0);
+			//sets range to decide direction of sprite
 			player.moveY(2);
 			}
 		else if (isPressed(KeyCode.RIGHT)) {
@@ -54,7 +60,9 @@ public class Game extends Application{
 	}
 	
 	public void start(Stage primaryStage) throws FileNotFoundException {
-		root.setPrefSize(600, 600);
+		imageView.setX(640);
+		imageView.setY(512);
+		root.setPrefSize(1280, 1024);
 		root.getChildren().addAll(player);
 		
 		Scene scene = new Scene(root);
