@@ -3,7 +3,6 @@ package io.valhala.agonyserver;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.animation.AnimationTimer;
@@ -106,10 +105,10 @@ public class Game extends Application {
 					update(player1);
 				else
 					update(player2);
-				enemyUpdate(zombie1);
-				enemyUpdate(zombie2);
-				enemyUpdate(reaper);
-				enemyUpdate(EvilKing);
+				enemyUpdate(zombie1, 'x');
+				enemyUpdate(zombie2, 'y');
+				enemyUpdate(reaper, 'x');
+				enemyUpdate(EvilKing, 'y');
 			}
 		};
 		timer.start();
@@ -118,7 +117,8 @@ public class Game extends Application {
 		primaryStage.setScene(selection);
 		primaryStage.show();
 	}
-	public void enemyUpdate(CharacterMovement enemy) {
+	public void enemyUpdate(CharacterMovement enemy, char temp) {
+		if (temp == 'x') {
 		if (enemy.direction) {
 			enemy.animation.play();
 			enemy.animation.setOffsetY(64);
@@ -129,7 +129,21 @@ public class Game extends Application {
 			enemy.animation.setOffsetY(32);
 			enemy.moveX(-2);
 		}
-	}
+		}
+		else {
+			if (enemy.direction) {
+				enemy.animation.play();
+				enemy.animation.setOffsetY(0);
+				enemy.moveY(2);
+			}
+			else {
+				enemy.animation.play();
+				enemy.animation.setOffsetY(96);
+				enemy.moveY(-2);
+			}
+			}
+		}
+	
 	public void update(CharacterMovement player) {
 		if(isPressed(KeyCode.UP)) {
 			//starts the animation of the sprite

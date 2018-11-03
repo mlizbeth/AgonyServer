@@ -11,7 +11,7 @@ import javafx.util.Duration;
 public class CharacterMovement extends Pane {
 //DFA
 	ImageView imageView;
-	Random ran = new Random();
+	Random ran = new Random(System.currentTimeMillis());
 	int count = 3;
 	int columns = 3;
 	int offsetX = 0;
@@ -46,6 +46,14 @@ public class CharacterMovement extends Pane {
 	
 	public void moveY(int y) {
 		boolean right = y>0?true:false;
+		
+		this.x += y;
+		if (this.x > 300)
+			direction = false;
+		else if (this.x < 0){
+			direction = true;
+		}
+		
 		for(int i = 0; i < Math.abs(y); i++) {
 			if(right) this.setTranslateY(this.getTranslateY() + 1);
 				else this.setTranslateY(this.getTranslateY() - 1);
