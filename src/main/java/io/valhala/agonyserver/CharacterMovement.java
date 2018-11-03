@@ -1,5 +1,7 @@
 package io.valhala.agonyserver;
 
+import java.util.Random;
+
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -9,13 +11,14 @@ import javafx.util.Duration;
 public class CharacterMovement extends Pane {
 //DFA
 	ImageView imageView;
+	Random ran = new Random();
 	int count = 3;
 	int columns = 3;
 	int offsetX = 0;
 	int offsetY = 0;
 	int width = 32;
 	int height = 32;
-	private int x;
+	private int x = ran.nextInt(300);
 	public boolean direction = true;
 	public SpriteAnimation animation;
 	Rectangle removeRect = null;
@@ -30,9 +33,9 @@ public class CharacterMovement extends Pane {
 	public void moveX(int x) {
 		boolean right = x>0?true:false;
 		this.x += x;
-		if (this.x == 300)
+		if (this.x > 300)
 			direction = false;
-		else if (this.x== -2){
+		else if (this.x < 0){
 			direction = true;
 		}
 		for(int i = 0; i < Math.abs(x); i++) {
