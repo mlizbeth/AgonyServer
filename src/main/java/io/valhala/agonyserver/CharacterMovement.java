@@ -15,6 +15,8 @@ public class CharacterMovement extends Pane {
 	int offsetY = 0;
 	int width = 32;
 	int height = 32;
+	private int x;
+	public boolean direction = true;
 	public SpriteAnimation animation;
 	Rectangle removeRect = null;
 	
@@ -27,6 +29,12 @@ public class CharacterMovement extends Pane {
 	
 	public void moveX(int x) {
 		boolean right = x>0?true:false;
+		this.x += x;
+		if (this.x == 300)
+			direction = false;
+		else if (this.x== -2){
+			direction = true;
+		}
 		for(int i = 0; i < Math.abs(x); i++) {
 			if(right) this.setTranslateX(this.getTranslateX() + 1);
 				else this.setTranslateX(this.getTranslateX() - 1);
@@ -41,4 +49,10 @@ public class CharacterMovement extends Pane {
 		}
 	
 }
+	public int getOffsetX() {
+		return offsetX;
+	}
+	public int getOffsetY() {
+		return offsetY;
+	}
 }

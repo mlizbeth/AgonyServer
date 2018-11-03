@@ -25,8 +25,16 @@ public class Game extends Application {
 	int toon;
 	ImageView imageView = ImageLoader.loadImg("/images/Viking.png");
 	ImageView imageView2 = ImageLoader.loadImg("/images/witch.png");//needs improvement
+	ImageView imageView3 = ImageLoader.loadImg("/images/EvilKing.png");
+	ImageView imageView4 = ImageLoader.loadImg("/images/reaper.png");//needs improvement
+	ImageView imageView5 = ImageLoader.loadImg("/images/Zombie1.png");
+	ImageView imageView6 = ImageLoader.loadImg("/images/Zombie2.png");//needs improvement
 	CharacterMovement player1 = new CharacterMovement(imageView);
 	CharacterMovement player2 = new CharacterMovement(imageView2);//needs improvement
+	CharacterMovement zombie1 = new CharacterMovement(imageView6);
+	CharacterMovement zombie2 = new CharacterMovement(imageView5);//needs improvement
+	CharacterMovement reaper = new CharacterMovement(imageView4);
+	CharacterMovement EvilKing = new CharacterMovement(imageView3);//needs improvement
 	Scene selection;
 	Scene scene;
 	static Pane root = new Pane();
@@ -41,8 +49,16 @@ public class Game extends Application {
 		
 		imageView.setX(640);
 		imageView.setY(512);
-		imageView2.setX(0);//needs improvement
-		imageView2.setY(0);//needs improvement
+		imageView2.setX(640);//needs improvement
+		imageView2.setY(512);//needs improvement
+		imageView3.setX(500);
+		imageView3.setY(400);
+		imageView4.setX(800);//needs improvement
+		imageView4.setY(700);//needs improvement
+		imageView5.setX(300);
+		imageView5.setY(200);
+		imageView6.setX(0);//needs improvement
+		imageView6.setY(900);//needs improvement
 		root.setPrefSize(1280, 1024);
 
 		//Character Selection Screen Algorithm
@@ -66,6 +82,10 @@ public class Game extends Application {
 				toon = 2;
 			}
 		});
+		root.getChildren().addAll(zombie1);
+		root.getChildren().addAll(zombie2);
+		root.getChildren().addAll(reaper);
+		root.getChildren().addAll(EvilKing);
 		
 		VBox layout1 = new VBox(20);
 		layout1.setLayoutX(640);
@@ -86,7 +106,10 @@ public class Game extends Application {
 					update(player1);
 				else
 					update(player2);
-					
+				enemyUpdate(zombie1);
+				enemyUpdate(zombie2);
+				enemyUpdate(reaper);
+				enemyUpdate(EvilKing);
 			}
 		};
 		timer.start();
@@ -95,7 +118,18 @@ public class Game extends Application {
 		primaryStage.setScene(selection);
 		primaryStage.show();
 	}
-	
+	public void enemyUpdate(CharacterMovement enemy) {
+		if (enemy.direction) {
+			enemy.animation.play();
+			enemy.animation.setOffsetY(64);
+			enemy.moveX(2);
+		}
+		else {
+			enemy.animation.play();
+			enemy.animation.setOffsetY(32);
+			enemy.moveX(-2);
+		}
+	}
 	public void update(CharacterMovement player) {
 		if(isPressed(KeyCode.UP)) {
 			//starts the animation of the sprite
