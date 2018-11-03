@@ -7,8 +7,8 @@ public class ImageLoader {
 	
 private static ImageView imgView;
 	
-	public static ImageView loadImg(String path) {
-		Image img = new Image(path);
+	public static ImageView loadImg(String string) {
+		Image img = new Image(string);
 		imgView = new ImageView(img);
 		return imgView;
 	}
