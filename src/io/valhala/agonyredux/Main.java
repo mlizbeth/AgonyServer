@@ -2,7 +2,6 @@ package io.valhala.agonyredux;
 
 import io.valhala.agonyredux.display.ViewManager;
 import javafx.application.Application;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 
@@ -18,7 +17,9 @@ public class Main extends Application {
 		try {
 			ViewManager manager = new ViewManager();
 			primaryStage = manager.getMainStage();
+			primaryStage.setTitle("Agony Server Preview");
 			primaryStage.show();
+			primaryStage.setResizable(false);
 		} catch(Exception e) {e.printStackTrace();}
 		
 	}

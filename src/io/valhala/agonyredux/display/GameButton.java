@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
 
-public class MenuButton extends Button {
+public class GameButton extends Button {
 
 	private final String FONT_PATH = "res/fonts/Mael.ttf";
 	private final String BUTTON_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/img/blue_button00.png');";
@@ -14,14 +14,14 @@ public class MenuButton extends Button {
 	private final String BUTTON_STYLE_HOVER = "-fx-background-color: transparent; -fx-background-image: url('/img/blue_button02.png');";
 
 	
-	public MenuButton(String title) {
+	public GameButton(String title) {
 		try {
 			setFont(Font.loadFont(new FileInputStream(FONT_PATH), 16));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		setStyle(BUTTON_STYLE);
 		setText(title);
+		setStyle(BUTTON_STYLE);
 		setPrefHeight(49);
 		setPrefWidth(190);
 		initListeners();
