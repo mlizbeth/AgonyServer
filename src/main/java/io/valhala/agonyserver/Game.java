@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 
-//import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-//import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -24,15 +22,15 @@ public class Game extends Application {
 	int toon;
 	Scene selection;
 	Scene scene;
-	static Pane root = new Pane();
+	public static Pane root = new Pane();
 	
 	//Create Players and enemies
-	CharacterMovement player1 = new CharacterMovement( "/images/Viking.png", 640, 512);
-	CharacterMovement player2 = new CharacterMovement("/images/witch.png", 640, 512);
-	CharacterMovement zombie1 = new CharacterMovement("/images/EvilKing.png", 500, 400);
-	CharacterMovement zombie2 = new CharacterMovement("/images/reaper.png", 800, 700);
-	CharacterMovement reaper = new CharacterMovement("/images/Zombie1.png", 300, 200);
-	CharacterMovement EvilKing = new CharacterMovement("/images/Zombie2.png", 0, 900);
+	static CharacterMovement player1 = new CharacterMovement( "/images/Viking.png", 0, 0);
+	static CharacterMovement player2 = new CharacterMovement("/images/witch.png", 0, 0);
+	static CharacterMovement EvilKing = new CharacterMovement("/images/EvilKing.png", 500, 400);
+	static CharacterMovement reaper = new CharacterMovement("/images/reaper.png", 800, 700);
+	static CharacterMovement zombie1 = new CharacterMovement("/images/Zombie1.png", 300, 200);
+	static CharacterMovement zombie2 = new CharacterMovement("/images/Zombie2.png", 800, 100);
 
 	
 	public static void main(String[] args) {
@@ -101,8 +99,9 @@ public class Game extends Application {
 		primaryStage.show();
 	}
 	
-		
 }
+		
+
 
 
 		

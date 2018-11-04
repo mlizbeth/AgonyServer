@@ -1,8 +1,11 @@
 package io.valhala.agonyserver;
 
 import java.util.Random;
+
+import com.badlogic.gdx.ai.utils.Collision;
+
+import io.valhala.agonyserver.framework.PlayerCollision;
 import io.valhala.agonyserver.framework.graphics.ImageLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -11,55 +14,68 @@ import javafx.util.Duration;
 
 public class CharacterMovement extends Pane {
 //DFA
-	ImageView imageView;
+	public ImageView imageView;
 	Random ran = new Random(System.currentTimeMillis());
 	int count = 3;
 	int columns = 3;
 	int offsetX = 0;
+	public Rectangle r;
 	int offsetY = 0;
 	int width = 32;
 	int height = 32;
-	private int x = ran.nextInt(300);
+	private int num = ran.nextInt(300);
 	public boolean direction = true;
 	public SpriteAnimation animation;
-	Rectangle removeRect = null;
 	
 	public CharacterMovement(String string, int x,int  y){
-		imageView = ImageLoader.loadImg(string);
-		imageView.setX(x);
-		imageView.setY(y);
-		this.imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
-		animation = new SpriteAnimation(imageView, Duration.millis(200), count, columns, offsetX, offsetY, width, height);
+		
+		r = new Rectangle(x, y, width, height)
+;		imageView = ImageLoader.loadImg(string);
+		imageView.relocate(x,y);
+		
+		animation = new SpriteAnimation(imageView, Duration.millis(300), count, columns, offsetX, offsetY, width, height);
 		getChildren().addAll(imageView);
 	}
 	
 	public void moveX(int x) {
 		boolean right = x>0?true:false;
-		this.x += x;
-		if (this.x > 300)
+		this.num += x;
+		if (this.num > 300)
 			direction = false;
-		else if (this.x < 0){
+		else if (this.num < 0){
 			direction = true;
 		}
 		for(int i = 0; i < Math.abs(x); i++) {
-			if(right) this.setTranslateX(this.getTranslateX() + 1);
-				else this.setTranslateX(this.getTranslateX() - 1);
+			if(right) {
+				this.setLayoutX(this.getLayoutX() +1);
+				r.setX(r.getX() +1);
+			}
+				else { 
+					this.setLayoutX(this.getLayoutX() - 1);
+					r.setX(r.getX() -1);
+				}
 		}
 	}
 	
 	public void moveY(int y) {
 		boolean right = y>0?true:false;
 		
-		this.x += y;
-		if (this.x > 300)
+		this.num += y;
+		if (this.num > 300)
 			direction = false;
-		else if (this.x < 0){
+		else if (this.num < 0){
 			direction = true;
 		}
 		
 		for(int i = 0; i < Math.abs(y); i++) {
-			if(right) this.setTranslateY(this.getTranslateY() + 1);
-				else this.setTranslateY(this.getTranslateY() - 1);
+			if (right) {
+				this.setLayoutY(this.getLayoutY() +1);
+				r.setY(r.getY() +1);
+			}
+				else { 
+					this.setLayoutY(this.getLayoutY() -1);
+					r.setY(r.getY() -1);
+				}
 		}
 	
 }
@@ -99,6 +115,11 @@ public class CharacterMovement extends Pane {
 		}
 		else
 			this.animation.stop();
+		PlayerCollision.collide(this, Game.EvilKing);
+		PlayerCollision.collide(this, Game.zombie1);
+		PlayerCollision.collide(this, Game.zombie2);
+		PlayerCollision.collide(this, Game.reaper);
+		
 	}
 	
 	public void enemyUpdate( char temp) {
