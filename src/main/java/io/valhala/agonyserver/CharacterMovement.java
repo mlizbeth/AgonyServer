@@ -165,7 +165,6 @@ public class CharacterMovement extends Pane {
 	public void enemyUpdate( char temp) {
 		//if (PlayerCollision.threatDetection(Game.player1, threat)){
 			if (this.getLayoutX() < Game.player1.getLayoutX()) {
-				this.animation.play();
 				this.animation.setOffsetY(64);
 				this.moveX(1);
 			}
@@ -186,8 +185,6 @@ public class CharacterMovement extends Pane {
 				this.animation.setOffsetY(96);
 				this.moveY(-1);
 			}
-		
-		else this.animation.stop();
 		
 }
 			

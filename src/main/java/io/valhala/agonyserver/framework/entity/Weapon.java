@@ -1,12 +1,9 @@
 package io.valhala.agonyserver.framework.entity;
 
-import java.io.FileInputStream;
 import javafx.scene.input.KeyCode;
 
 import io.valhala.agonyserver.Game;
-import io.valhala.agonyserver.SpriteAnimation;
 import io.valhala.agonyserver.framework.PlayerCollision;
-import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
