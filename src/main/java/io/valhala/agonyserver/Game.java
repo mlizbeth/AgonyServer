@@ -12,25 +12,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Game extends Application {
 	
-	static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+	public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
+	public static HashMap<KeyCode, Boolean> mouse = new HashMap<>();
 	int toon;
 	Scene selection;
 	Scene scene;
 	public static Pane root = new Pane();
 	
 	//Create Players and enemies
-	static CharacterMovement player1 = new CharacterMovement( "/images/Viking.png", 0, 0);
+	public static CharacterMovement player1 = new CharacterMovement( "/images/Viking.png", 0, 0);
 	static CharacterMovement player2 = new CharacterMovement("/images/witch.png", 0, 0);
-	static CharacterMovement EvilKing = new CharacterMovement("/images/EvilKing.png", 500, 400);
-	static CharacterMovement reaper = new CharacterMovement("/images/reaper.png", 800, 700);
-	static CharacterMovement zombie1 = new CharacterMovement("/images/Zombie1.png", 300, 200);
-	static CharacterMovement zombie2 = new CharacterMovement("/images/Zombie2.png", 800, 100);
+	public static CharacterMovement EvilKing = new CharacterMovement("/images/EvilKing.png", 500, 400);
+	public static CharacterMovement reaper = new CharacterMovement("/images/reaper.png", 800, 700);
+	public static CharacterMovement zombie1 = new CharacterMovement("/images/Zombie1.png", 300, 200);
+	public static CharacterMovement zombie2 = new CharacterMovement("/images/Zombie2.png", 800, 100);
 
 	
 	public static void main(String[] args) {
@@ -86,10 +88,12 @@ public class Game extends Application {
 					player1.update();
 				else
 					player2.update();
+				
 				zombie1.enemyUpdate('x');
 				zombie2.enemyUpdate( 'y');
 				reaper.enemyUpdate( 'x');
 				EvilKing.enemyUpdate( 'y');
+				player1.axe.update(player1.dir);
 			}
 		};
 		timer.start();
