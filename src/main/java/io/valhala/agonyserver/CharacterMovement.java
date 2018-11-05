@@ -17,17 +17,19 @@ public class CharacterMovement extends Pane {
 	Random ran = new Random(System.currentTimeMillis());
 	int atk = 1;
 	int count = 3;
+	int spawn;
 	int columns = 3;
 	int offsetX = 0;
 	int offsetY = 0;
 	int dir;
-	Weapon axe;
 	int width = 32;
 	int height = 32;
 	private int num = ran.nextInt(300);
 	public boolean direction = true;
+	public boolean dead = false;
 	public SpriteAnimation animation;
 	Rectangle threat;
+	Weapon axe;
 
 	
 	public CharacterMovement(String string, int x,int  y){
@@ -185,8 +187,33 @@ public class CharacterMovement extends Pane {
 				this.animation.setOffsetY(96);
 				this.moveY(-1);
 			}
+			if (checkDead()) {
+				respawn();
+			}
 		
 }
+	
+	public void respawn() {
+		spawn = ran.nextInt(4);
+		if (spawn == 0) {
+			this.relocate(0, ran.nextInt(Game.SCREENHEIGHT));
+		}
+		else if(spawn == 1) {
+			this.relocate(Game.SCREENWIDTH, ran.nextInt(Game.SCREENHEIGHT));
+		}
+		else if (spawn == 2) {
+			this.relocate(ran.nextInt(Game.SCREENWIDTH), 0);
+		}
+		else {
+			this.relocate(ran.nextInt(Game.SCREENWIDTH), Game.SCREENHEIGHT);
+		}
+		dead = false;
+		Game.root.getChildren().addAll(this);
+	}
+	
+	public boolean checkDead() {
+		return dead;
+	}
 			
 	public boolean isPressed(KeyCode key) {
 		return Game.keys.getOrDefault(key, false);

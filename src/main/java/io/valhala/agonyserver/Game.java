@@ -15,8 +15,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-public class Game extends Application {
+ public class Game extends Application {
+	
+	static int SCREENWIDTH = 800;
+	static int SCREENHEIGHT = 800;
 	
 	public static HashMap<KeyCode, Boolean> keys = new HashMap<>();
 	public static HashMap<KeyCode, Boolean> mouse = new HashMap<>();
@@ -26,8 +28,8 @@ public class Game extends Application {
 	public static Pane root = new Pane();
 	
 	//Create Players and enemies
-	public static CharacterMovement player1 = new CharacterMovement( "/images/Viking.png", 0, 0);
-	static CharacterMovement player2 = new CharacterMovement("/images/witch.png", 0, 0);
+	public static CharacterMovement player1 = new CharacterMovement( "/images/Viking.png", SCREENWIDTH/2, SCREENHEIGHT/2);
+	static CharacterMovement player2 = new CharacterMovement("/images/witch.png", SCREENWIDTH/2, SCREENHEIGHT/2);
 	public static CharacterMovement EvilKing = new CharacterMovement("/images/EvilKing.png", 500, 400);
 	public static CharacterMovement reaper = new CharacterMovement("/images/reaper.png", 800, 700);
 	public static CharacterMovement zombie1 = new CharacterMovement("/images/Zombie1.png", 300, 200);
@@ -40,7 +42,7 @@ public class Game extends Application {
 	
 	public void start(Stage primaryStage) throws FileNotFoundException {
 		
-		root.setPrefSize(1280, 1024);
+		root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
 
 		//Character Selection Screen Algorithm
 		Label label1 = new Label("Please choose your character");
@@ -69,10 +71,10 @@ public class Game extends Application {
 		root.getChildren().addAll(EvilKing);
 		
 		VBox layout1 = new VBox(20);
-		layout1.setLayoutX(640);
-		layout1.setLayoutY(512);
+		layout1.setLayoutX(SCREENWIDTH / 2);
+		layout1.setLayoutY(SCREENHEIGHT / 2);
 		layout1.getChildren().addAll(label1, btn1, btn2);
-		selection = new Scene(layout1, 1280, 1024);
+		selection = new Scene(layout1, SCREENWIDTH, SCREENHEIGHT);
 
 		scene = new Scene(root);
 		scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));	

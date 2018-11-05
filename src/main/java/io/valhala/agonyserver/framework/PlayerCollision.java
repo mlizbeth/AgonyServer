@@ -19,6 +19,7 @@ public class PlayerCollision {
 	public static void hit(CharacterMovement player, Weapon weapon) {
 		if (weapon.getBoundsInParent().intersects(player.getBoundsInParent())) {
 			Game.root.getChildren().remove(player);
+			player.dead = true;
 		}
 	
 		

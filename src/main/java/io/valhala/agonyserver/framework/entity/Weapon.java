@@ -98,6 +98,7 @@ public class Weapon extends Pane {
 			atk = 0;
 			animation.stop();
 			Game.root.getChildren().remove(this);
+			this.relocate(1500, 1500);
 		}
 		PlayerCollision.hit(Game.zombie1, this);
 		PlayerCollision.hit(Game.zombie2, this);
