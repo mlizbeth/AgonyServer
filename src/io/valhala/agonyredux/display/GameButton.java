@@ -2,13 +2,16 @@ package io.valhala.agonyredux.display;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+
+import io.valhala.agonyredux.Main;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
 
 public class GameButton extends Button {
 
-	private final String FONT_PATH = "res/fonts/Mael.ttf";
+	private String FONT_PATH = "res/fonts/Mael.ttf";
 	private final String BUTTON_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/img/blue_button00.png');";
 	private final String BUTTON_STYLE_PRESSED = "-fx-background-color: transparent; -fx-background-image: url('/img/blue_button01.png');";
 	private final String BUTTON_STYLE_HOVER = "-fx-background-color: transparent; -fx-background-image: url('/img/blue_button02.png');";
@@ -66,7 +69,4 @@ public class GameButton extends Button {
 			setStyle(BUTTON_STYLE);
 		});
 	}
-	
-	
-	
 }
