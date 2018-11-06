@@ -33,4 +33,6 @@ public class PlayerCollision {
 			Game.root.getChildren().remove(player2);
 	}
 }
-}
+	
+		
+	}

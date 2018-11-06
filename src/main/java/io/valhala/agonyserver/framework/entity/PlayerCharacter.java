@@ -16,5 +16,6 @@ public class PlayerCharacter extends Character {
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
+	
 
 }

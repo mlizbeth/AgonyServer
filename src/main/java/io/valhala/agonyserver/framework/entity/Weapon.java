@@ -3,7 +3,9 @@ package io.valhala.agonyserver.framework.entity;
 import javafx.scene.input.KeyCode;
 
 import io.valhala.agonyserver.Game;
+import io.valhala.agonyserver.SpriteAnimation;
 import io.valhala.agonyserver.framework.PlayerCollision;
+import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,16 +22,15 @@ public class Weapon extends Pane {
 	int atk = 0;
 	int height = 32;
 	int direction;
-	public WeaponAnimation animation;
+	public SpriteAnimation animation;
 
 	
 	public Weapon(String string, double x, double y){
 		
-		Image img = new Image(string);
-		imageView = new ImageView(img);
+		imageView = ImageLoader.loadImg(string);
 		imageView.relocate(x,y);
 		
-		animation = new WeaponAnimation(imageView, Duration.millis(300), count, columns, offsetX, offsetY, width, height);
+		animation = new SpriteAnimation(imageView, Duration.millis(300), count, columns, offsetX, offsetY, width, height);
 		getChildren().addAll(imageView);
 		
 	}
@@ -70,7 +71,7 @@ public class Weapon extends Pane {
 			atk ++;
 		}
 		if (atk == 1) {
-			setcoords(Game.player1.getLayoutX(), Game.player1.getLayoutY());
+			setcoords(Game.player.getLayoutX(), Game.player.getLayoutY());
 			Game.root.getChildren().addAll(this);
 			animation.play();
 			this.direction = direction;
@@ -100,10 +101,6 @@ public class Weapon extends Pane {
 			Game.root.getChildren().remove(this);
 			this.relocate(1500, 1500);
 		}
-		PlayerCollision.hit(Game.zombie1, this);
-		PlayerCollision.hit(Game.zombie2, this);
-		PlayerCollision.hit(Game.EvilKing, this);
-		PlayerCollision.hit(Game.reaper, this);
 	}
 	public boolean isPressed(KeyCode key) {
 		return Game.keys.getOrDefault(key, false);

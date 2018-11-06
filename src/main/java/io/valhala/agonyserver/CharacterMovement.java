@@ -13,66 +13,56 @@ import javafx.util.Duration;
 
 public class CharacterMovement extends Pane {
 //DFA
-	public ImageView imageView;
-	Random ran = new Random(System.currentTimeMillis());
-	int atk = 1;
-	int count = 3;
-	int spawn;
-	int columns = 3;
-	int offsetX = 0;
-	int offsetY = 0;
-	int dir;
-	int width = 32;
-	int height = 32;
-	private int num = ran.nextInt(300);
-	public boolean direction = true;
+	
+	private int count = 3;
+	private int columns = 3;
+	private int offsetX = 0;
+	private int offsetY = 0;
+	private int dir;
+	private int width = 32;
+	private int height = 32;
+	
+
+	
+	private ImageView imageView;
+	private SpriteAnimation animation;
+	
+	private Random ran = new Random(System.currentTimeMillis());
+	
 	public boolean dead = false;
-	public SpriteAnimation animation;
-	Rectangle threat;
-	Weapon axe;
+	
+	public Weapon[] axe = new Weapon[3];
+
 
 	
 	public CharacterMovement(String string, int x,int  y){
 		
-		axe = new Weapon("/images/throwing_axe.png", 0, 0);
 		
-		imageView = ImageLoader.loadImg( string);
+		weaponinit();
 		this.relocate(x,y);
-		
-		threat = new Rectangle(x -100, y -100, 200, 200);
+		imageView = ImageLoader.loadImg( string);
 		
 		animation = new SpriteAnimation(imageView, Duration.millis(300), count, columns, offsetX, offsetY, width, height);
 		getChildren().addAll(imageView);
-		//Game.root.getChildren().addAll(axe);
 	}
 	
 	public void moveX(int x) {
+		
 		boolean right = x>0?true:false;
-		this.num += x;
-		if (this.num > 300)
-			direction = false;
-		else if (this.num < 0){
-			direction = true;
-		}
+		
 		for(int i = 0; i < Math.abs(x); i++) {
-			if(right) {
+			
+			if(right)
 				this.setLayoutX(this.getLayoutX() +1);
-			}
-				else { 
-					this.setLayoutX(this.getLayoutX() - 1);
-				}
+			else 
+				this.setLayoutX(this.getLayoutX() - 1);
+				
 		}
 	}
 	
 	public void moveY(int y) {
 		boolean right = y>0?true:false;
 		
-		this.num += y;
-		if (this.num > 300)
-			direction = false;
-		else if (this.num < 0){
-			direction = true;
-		}
 		
 		for(int i = 0; i < Math.abs(y); i++) {
 			if (right) {
@@ -93,38 +83,8 @@ public class CharacterMovement extends Pane {
 	
 	public void update() {
 		
-		if(isPressed(KeyCode.W) && isPressed(KeyCode.D)) {
-			//starts the animation of the sprite
-			this.animation.play(); 
-			//picks the bottom Sprite
-			this.animation.setOffsetY(96);
-			//sets the range to decide direction of sprite
-			this.moveY(-2);
-			this.moveX(2);
-		}
-		else if(isPressed(KeyCode.W) && isPressed(KeyCode.A)) {
-			//starts the animation of the sprite
-			this.animation.play();
-			//picks the top sprite
-			this.animation.setOffsetY(96);
-			//sets range to decide direction of sprite
-			this.moveY(-2);
-			this.moveX(-2);
-		}
-		else if(isPressed(KeyCode.S) && isPressed(KeyCode.D)) {
-			this.animation.play();
-			this.animation.setOffsetY(0);
-			this.moveX(2);
-			this.moveY(2);
-		}
-		else if(isPressed(KeyCode.S) && isPressed(KeyCode.A)) {
-				this.animation.play();
-				this.animation.setOffsetY(0);
-				this.moveX(-2);
-				this.moveY(2);
-		}
 		
-		else if(isPressed(KeyCode.UP) || isPressed(KeyCode.W)) {
+		if(isPressed(KeyCode.UP) || isPressed(KeyCode.W)) {
 			//starts the animation of the sprite
 			this.animation.play(); 
 			//picks the bottom Sprite
@@ -156,33 +116,29 @@ public class CharacterMovement extends Pane {
 		}
 		else
 			this.animation.stop();
-		PlayerCollision.collide(this, Game.EvilKing);
-		PlayerCollision.collide(this, Game.zombie1);
-		PlayerCollision.collide(this, Game.zombie2);
-		PlayerCollision.collide(this, Game.reaper);
-		
+		weaponthrow();
 		
 	}
 	
-	public void enemyUpdate( char temp) {
-		//if (PlayerCollision.threatDetection(Game.player1, threat)){
-			if (this.getLayoutX() < Game.player1.getLayoutX()) {
+	public void enemyUpdate() {
+
+			if (this.getLayoutX() < Game.player.getLayoutX()) {
 				this.animation.setOffsetY(64);
 				this.moveX(1);
 			}
-			 if (this.getLayoutX() > Game.player1.getLayoutX()){
+			 if (this.getLayoutX() > Game.player.getLayoutX()){
 				this.animation.play();
 				this.animation.setOffsetY(32);
 				this.moveX(-1);
 				
 			}
 			
-			 if (this.getLayoutY() < Game.player1.getLayoutY()) {
+			 if (this.getLayoutY() < Game.player.getLayoutY()) {
 				this.animation.play();
 				this.animation.setOffsetY(0);
 				this.moveY(1);
 			}
-			 if  (this.getLayoutY() > Game.player1.getLayoutY()) {
+			 if  (this.getLayoutY() > Game.player.getLayoutY()) {
 				this.animation.play();
 				this.animation.setOffsetY(96);
 				this.moveY(-1);
@@ -194,7 +150,7 @@ public class CharacterMovement extends Pane {
 }
 	
 	public void respawn() {
-		spawn = ran.nextInt(4);
+		int spawn = ran.nextInt(4);
 		if (spawn == 0) {
 			this.relocate(0, ran.nextInt(Game.SCREENHEIGHT));
 		}
@@ -219,5 +175,15 @@ public class CharacterMovement extends Pane {
 		return Game.keys.getOrDefault(key, false);
 	}
 		
+	public void weaponinit() {
+		for (int i = 0; i < 3; i++) {
+			axe[i] = new Weapon("/images/throwing_axe.png", 0, 0);
+		}
+	}
+	public void weaponthrow() {
+		for (int i = 0; i < 3; i++ ) {
+			axe[i].update(dir);
+		}
+	}
 }
 
