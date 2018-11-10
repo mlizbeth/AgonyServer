@@ -2,13 +2,11 @@ package io.valhala.agonyserver;
 
 import java.util.Random;
 
-import io.valhala.agonyserver.framework.PlayerCollision;
 import io.valhala.agonyserver.framework.entity.Weapon;
 import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class CharacterMovement extends Pane {
@@ -27,11 +25,9 @@ public class CharacterMovement extends Pane {
 	private ImageView imageView;
 	private SpriteAnimation animation;
 	
-	private Random ran = new Random(System.currentTimeMillis());
 	
 	public boolean dead = false;
-	
-	public Weapon[] axe = new Weapon[3];
+	Weapon axe;
 
 
 	
@@ -52,10 +48,15 @@ public class CharacterMovement extends Pane {
 		
 		for(int i = 0; i < Math.abs(x); i++) {
 			
-			if(right)
+			if(right && this.getLayoutX() < 1490)
+			{
 				this.setLayoutX(this.getLayoutX() +1);
-			else 
+				Game.camera.setTranslateX(Game.camera.getTranslateX() +1);
+			}
+			else if(this.getLayoutX() > 10) {
 				this.setLayoutX(this.getLayoutX() - 1);
+				Game.camera.setTranslateX(Game.camera.getTranslateX() -1);
+			}
 				
 		}
 	}
@@ -65,11 +66,13 @@ public class CharacterMovement extends Pane {
 		
 		
 		for(int i = 0; i < Math.abs(y); i++) {
-			if (right) {
+			if (right && this.getLayoutY() < 1490) {
 				this.setLayoutY(this.getLayoutY() +1);
+				Game.camera.setTranslateY(Game.camera.getTranslateY() +1);
 			}
-				else { 
+				else if(this.getLayoutY() > 10){ 
 					this.setLayoutY(this.getLayoutY() -1);
+					Game.camera.setTranslateY(Game.camera.getTranslateY() -1);
 				}
 		}
 	
@@ -120,56 +123,7 @@ public class CharacterMovement extends Pane {
 		
 	}
 	
-	public void enemyUpdate() {
 
-			if (this.getLayoutX() < Game.player.getLayoutX()) {
-				this.animation.setOffsetY(64);
-				this.moveX(1);
-			}
-			 if (this.getLayoutX() > Game.player.getLayoutX()){
-				this.animation.play();
-				this.animation.setOffsetY(32);
-				this.moveX(-1);
-				
-			}
-			
-			 if (this.getLayoutY() < Game.player.getLayoutY()) {
-				this.animation.play();
-				this.animation.setOffsetY(0);
-				this.moveY(1);
-			}
-			 if  (this.getLayoutY() > Game.player.getLayoutY()) {
-				this.animation.play();
-				this.animation.setOffsetY(96);
-				this.moveY(-1);
-			}
-			if (checkDead()) {
-				respawn();
-			}
-		
-}
-	
-	public void respawn() {
-		int spawn = ran.nextInt(4);
-		if (spawn == 0) {
-			this.relocate(0, ran.nextInt(Game.SCREENHEIGHT));
-		}
-		else if(spawn == 1) {
-			this.relocate(Game.SCREENWIDTH, ran.nextInt(Game.SCREENHEIGHT));
-		}
-		else if (spawn == 2) {
-			this.relocate(ran.nextInt(Game.SCREENWIDTH), 0);
-		}
-		else {
-			this.relocate(ran.nextInt(Game.SCREENWIDTH), Game.SCREENHEIGHT);
-		}
-		dead = false;
-		Game.root.getChildren().addAll(this);
-	}
-	
-	public boolean checkDead() {
-		return dead;
-	}
 			
 	public boolean isPressed(KeyCode key) {
 		return Game.keys.getOrDefault(key, false);
@@ -177,13 +131,11 @@ public class CharacterMovement extends Pane {
 		
 	public void weaponinit() {
 		for (int i = 0; i < 3; i++) {
-			axe[i] = new Weapon("/images/throwing_axe.png", 0, 0);
+			axe = new Weapon("/images/throwing_axe.png", 0, 0);
 		}
 	}
 	public void weaponthrow() {
-		for (int i = 0; i < 3; i++ ) {
-			axe[i].update(dir);
-		}
+		axe.update(dir);
 	}
 }
 

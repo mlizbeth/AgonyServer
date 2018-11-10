@@ -14,14 +14,17 @@ import javafx.util.Duration;
 public class Weapon extends Pane {
 	
 	public ImageView imageView;
-	int count = 3;
-	int columns = 4;
-	int offsetX = 0;
-	int offsetY = 0;
-	int width = 32;
-	int atk = 0;
-	int height = 32;
-	int direction;
+	private int count = 3;
+	private int columns = 4;
+	private int offsetX = 0;
+	private int offsetY = 0;
+	private int width = 32;
+	private int atk = 0;
+	private int direction;
+	private int height = 32;
+	
+	public boolean thrown = false;
+	
 	public SpriteAnimation animation;
 
 	
@@ -76,8 +79,10 @@ public class Weapon extends Pane {
 			animation.play();
 			this.direction = direction;
 		}
+		if (atk == 5)
+			thrown = true;
 		if (atk >0 && atk < 100) {
-			if (this.direction == 0) {
+			if ( this.direction == 0) {
 			moveX(2);
 			this.animation.setOffsetY(0);
 			}
@@ -100,6 +105,7 @@ public class Weapon extends Pane {
 			animation.stop();
 			Game.root.getChildren().remove(this);
 			this.relocate(1500, 1500);
+			thrown = false;
 		}
 	}
 	public boolean isPressed(KeyCode key) {
