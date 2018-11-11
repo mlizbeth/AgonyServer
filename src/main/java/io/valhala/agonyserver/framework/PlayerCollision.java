@@ -28,7 +28,12 @@ public class PlayerCollision {
 		
 	}
 
-
+	public static boolean objectcollide(Rectangle r, CharacterMovement player) {
+		boolean intersects = false;
+		if (r.getBoundsInParent().intersects(player.getBoundsInParent()));
+			intersects = true;
+		return intersects;
+	}
 
 	public static void collide(CharacterMovement r, Enemy player2) {
 		// TODO Auto-generated method stub

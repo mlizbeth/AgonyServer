@@ -2,6 +2,8 @@ package io.valhala.agonyserver;
 
 import java.util.Random;
 
+import io.valhala.agonyserver.framework.PlayerCollision;
+import io.valhala.agonyserver.framework.entity.GameObjects;
 import io.valhala.agonyserver.framework.entity.Weapon;
 import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.scene.image.ImageView;
@@ -70,7 +72,7 @@ public class CharacterMovement extends Pane {
 				this.setLayoutY(this.getLayoutY() +1);
 				Game.camera.setTranslateY(Game.camera.getTranslateY() +1);
 			}
-				else if(this.getLayoutY() > 10){ 
+				else if(this.getLayoutY() > 10 ){ 
 					this.setLayoutY(this.getLayoutY() -1);
 					Game.camera.setTranslateY(Game.camera.getTranslateY() -1);
 				}

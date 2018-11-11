@@ -6,6 +6,7 @@ import java.util.Random;
 
 import io.valhala.agonyserver.framework.PlayerCollision;
 import io.valhala.agonyserver.framework.entity.Enemy;
+import io.valhala.agonyserver.framework.entity.GameObjects;
 import io.valhala.agonyserver.framework.graphics.ImageLoader;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -16,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
  public class Game extends Application {
@@ -31,6 +33,7 @@ import javafx.stage.Stage;
 	private static final String ZOMBIE2 = "/images/Zombie2.png";
 	private static final String EVILKING = "/images/EvilKing.png";
 	private static final String REAPER = "/images/reaper.png";
+	private static final String TREE = "/images/tree.png";
 	
 	static int gridSize = 50;
 	int[][] grid = new int[][] { 	
@@ -97,6 +100,7 @@ import javafx.stage.Stage;
 	
 	public static CharacterMovement player;
 	public static Enemy[] enemies = new Enemy[numEnemies];
+	public static GameObjects[] gameobject = new GameObjects[2];
 
 	
 	public static void main(String[] args) {
@@ -108,7 +112,10 @@ import javafx.stage.Stage;
 		init(primaryStage);
 		enemyinit();
 		playerinit();
-		
+		gameobject[0] = new GameObjects("/images/tree.png", 200, 300);
+		gameobject[1] = new GameObjects("/images/building.png", 700, 800);
+		root.getChildren().addAll(gameobject[0]);
+		root.getChildren().addAll(gameobject[1]);
 		scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));	
 		scene.setOnKeyReleased(event-> {
 			keys.put(event.getCode(), false);
@@ -119,9 +126,11 @@ import javafx.stage.Stage;
 			public void handle(long now) {
 				
 				player.update();
+				gameobjecttick();
 				enemytick();
 				enemystrike();
 				weopontick();
+				
 			}
 		};
 		timer.start();
@@ -137,6 +146,7 @@ import javafx.stage.Stage;
 		setImage();
 		setBackground();
 		root.getChildren().addAll(gridPane);
+		
 		scene = new Scene(root, SCREENWIDTH, SCREENHEIGHT);
 		scene.setCamera(camera);
 		
@@ -190,6 +200,7 @@ import javafx.stage.Stage;
 	public void enemytick() {
 		for (int i = 0; i < numEnemies; i++) {
 			enemies[i].enemyUpdate();
+			
 		}
 	}
 	public void enemystrike() {
@@ -201,6 +212,19 @@ import javafx.stage.Stage;
 		for (int i = 0; i < numEnemies; i++) {
 			for(int j = 0; j < 3; j++) {
 				PlayerCollision.hit(enemies[i], player.axe);
+			}
+		}
+	}
+	
+	public void gameobjecttick() {
+		for(int i = 0; i <2; i ++) {
+			if (player.getLayoutY() +30 > gameobject[i].getLayoutY() + gameobject[i].getHeight() -120) {
+				root.getChildren().remove(player);
+				root.getChildren().addAll(player);
+			}
+			else {
+				root.getChildren().remove(gameobject[i]);
+				root.getChildren().addAll(gameobject[i]);
 			}
 		}
 	}
