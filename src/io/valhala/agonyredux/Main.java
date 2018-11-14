@@ -13,13 +13,13 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage menuStage) throws Exception {
 		try {
 			ViewManager manager = new ViewManager();
-			primaryStage = manager.getMainStage();
-			primaryStage.setTitle("Agony Server Preview");
-			primaryStage.show();
-			primaryStage.setResizable(false);
+			menuStage = manager.getMainStage();
+			menuStage.setTitle("Agony Server Preview");
+			menuStage.show();
+			menuStage.setResizable(false);
 		} catch(Exception e) {e.printStackTrace();}
 		
 	}

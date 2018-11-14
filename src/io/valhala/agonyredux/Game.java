@@ -20,13 +20,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
- public class Game extends Application {
+ public class Game  {
 	
 	public static final int SCREENWIDTH = 800;
 	public static final int SCREENHEIGHT = 800;
 	private static int numEnemies = 4;
 	
-	Random ran = new Random(System.currentTimeMillis());
+	static Random ran = new Random(System.currentTimeMillis());
 	
 	private static final String PLAYER = "/images/Viking.png";
 	private static final String ZOMBIE1 = "/images/Zombie1.png";
@@ -35,8 +35,10 @@ import javafx.stage.Stage;
 	private static final String REAPER = "/images/reaper.png";
 	private static final String TREE = "/images/tree.png";
 	
+	private static Stage gamestage;
+	
 	static int gridSize = 50;
-	int[][] grid = new int[][] { 	
+	static int[][] grid = new int[][] { 	
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
 		{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
@@ -101,15 +103,12 @@ import javafx.stage.Stage;
 	public static CharacterMovement player;
 	public static Enemy[] enemies = new Enemy[numEnemies];
 	public static GameObjects[] gameobject = new GameObjects[2];
+	public static Stage gameStage;
 
 	
-	public static void main(String[] args) {
-		launch (args);
-	}
-	
-	public void start(Stage primaryStage) throws FileNotFoundException {
+	public static void game() {
 		
-		init(primaryStage);
+		init();
 		enemyinit();
 		playerinit();
 		gameobject[0] = new GameObjects("/images/tree.png", 200, 300);
@@ -135,11 +134,12 @@ import javafx.stage.Stage;
 		};
 		timer.start();
 
-		primaryStage.show();
+		gameStage.show();
 	}
 	
-	public void init(Stage stage) {
+	public static void init() {
 		
+		gameStage = new Stage();
 		root = new Pane();
 		root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
 		gridPane = new GridPane();
@@ -150,12 +150,12 @@ import javafx.stage.Stage;
 		scene = new Scene(root, SCREENWIDTH, SCREENHEIGHT);
 		scene.setCamera(camera);
 		
-		stage.setTitle("Agony Servers");
-		stage.setScene(scene);
+		gameStage.setTitle("Agony Servers");
+		gameStage.setScene(scene);
 		
 	}
 	
-	public void enemyinit() {
+	public static void enemyinit() {
 		for (int i = 0; i < numEnemies; i++) {
 			if (i == 0) 
 				enemies[i] = new Enemy(ZOMBIE1, SCREENWIDTH / 2, ran.nextInt(SCREENHEIGHT));
@@ -169,14 +169,14 @@ import javafx.stage.Stage;
 		}
 	}
 	
-	public void playerinit() {
+	public static void playerinit() {
 		
 		player = new CharacterMovement(PLAYER, SCREENWIDTH / 2, SCREENHEIGHT / 2);
 		root.getChildren().addAll(player);
 		
 	}
 	
-	public void setBackground() {
+	public static void setBackground() {
 		
 		for (int i = 0; i < gridSize; i++) {
 			for(int j = 0; j < gridSize; j++) {
@@ -185,7 +185,7 @@ import javafx.stage.Stage;
 		}
 	}
 	
-	public void setImage() {
+	public static void setImage() {
 		for (int i = 0; i < gridSize; i++) {
 			for(int j = 0; j < gridSize; j++) {
 				if (grid[i][j] == 0) {
@@ -197,18 +197,18 @@ import javafx.stage.Stage;
 		}
 	}
 	
-	public void enemytick() {
+	public static void enemytick() {
 		for (int i = 0; i < numEnemies; i++) {
 			enemies[i].enemyUpdate();
 			
 		}
 	}
-	public void enemystrike() {
+	public static void enemystrike() {
 		for (int i = 0; i < numEnemies; i++) {
 			PlayerCollision.collide(player, enemies[i]);
 		}
 	}
-	public void weopontick() {
+	public static void weopontick() {
 		for (int i = 0; i < numEnemies; i++) {
 			for(int j = 0; j < 3; j++) {
 				PlayerCollision.hit(enemies[i], player.axe);
@@ -216,7 +216,7 @@ import javafx.stage.Stage;
 		}
 	}
 	
-	public void gameobjecttick() {
+	public static void gameobjecttick() {
 		for(int i = 0; i <2; i ++) {
 			if (player.getLayoutY() +30 > gameobject[i].getLayoutY() + gameobject[i].getHeight() -120) {
 				root.getChildren().remove(player);
@@ -227,6 +227,13 @@ import javafx.stage.Stage;
 				root.getChildren().addAll(gameobject[i]);
 			}
 		}
+	}
+	
+	public static void createNewGame(Stage menuStage) {
+		
+		menuStage.hide();
+		game();
+		
 	}
 }
 		

@@ -1,7 +1,11 @@
 package io.valhala.agonyredux.display;
 
 import java.util.Random;
+
+import io.valhala.agonyredux.Game;
 import io.valhala.agonyredux.Main;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -103,6 +107,14 @@ public class ViewManager {
 		
 		b1.setLayoutX(100);
 		b1.setLayoutY(120);
+		
+		b1.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				Game.createNewGame(mainStage);
+			}
+		});
 		
 		b2.setLayoutX(100);
 		b2.setLayoutY(240);
