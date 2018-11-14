@@ -1,7 +1,6 @@
 package io.valhala.agonyredux.display;
 
 import java.util.Random;
-
 import io.valhala.agonyredux.Main;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,7 +22,10 @@ public class ViewManager {
 	private Scene mainScene;
 	private Stage mainStage;
 	
-	private GameSubScene temp = new GameSubScene();
+	private GameSubScene about;
+	private GameSubScene settings;
+	private GameSubScene help; 
+	private GameSubScene toHide;
 	
 	public ViewManager() {
 		mainPane = new AnchorPane();
@@ -37,9 +39,25 @@ public class ViewManager {
 		
 	}
 	
+	private void showSubScene(GameSubScene scene) {
+		if(toHide != null) {
+			toHide.moveSubScene();
+		}
+		
+		scene.moveSubScene();
+		toHide = scene;
+	}
+	
 	private void createSubScenes() {
-		temp = new GameSubScene();
-		mainPane.getChildren().add(temp);
+		about = new GameSubScene();
+		mainPane.getChildren().add(about);
+		
+		settings = new GameSubScene();
+		mainPane.getChildren().add(settings);
+		
+		help = new GameSubScene();
+		mainPane.getChildren().add(help);
+		
 	}
 	
 	private static MediaPlayer mp;
@@ -95,8 +113,12 @@ public class ViewManager {
 		b4.setLayoutX(100);
 		b4.setLayoutY(480);
 		
+		b3.setOnAction(e -> {
+			showSubScene(help);
+		});
+		
 		b4.setOnAction(e -> {
-			temp.moveSubScene();
+			showSubScene(about);
 		});
 
 	}
