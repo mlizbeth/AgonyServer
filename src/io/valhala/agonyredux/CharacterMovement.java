@@ -11,8 +11,8 @@ import javafx.util.Duration;
 public class CharacterMovement extends Pane {
 //DFA
 	
-	private int count = 3;
-	private int columns = 3;
+	private int count = 4;
+	private int columns = 4;
 	private int offsetX = 0;
 	private int offsetY = 0;
 	private int dir;
@@ -90,7 +90,7 @@ public class CharacterMovement extends Pane {
 			//starts the animation of the sprite
 			this.animation.play(); 
 			//picks the bottom Sprite
-			this.animation.setOffsetY(96);
+			this.animation.setOffsetY(64);
 			//sets the range to decide direction of sprite
 			this.moveY(-2);
 			dir = 3;
@@ -106,7 +106,7 @@ public class CharacterMovement extends Pane {
 		}
 		else if(isPressed(KeyCode.RIGHT) || isPressed(KeyCode.D)) {
 			this.animation.play();
-			this.animation.setOffsetY(64);
+			this.animation.setOffsetY(96);
 			this.moveX(2);
 			dir = 0;
 		}
