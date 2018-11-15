@@ -1,13 +1,19 @@
 package io.valhala.agonyredux.framework.entity;
 
 import javafx.scene.input.KeyCode;
+
+import java.net.URISyntaxException;
+
 import io.valhala.agonyredux.Game;
+import io.valhala.agonyredux.Main;
 import io.valhala.agonyredux.SpriteAnimation;
 import io.valhala.agonyredux.framework.graphics.ImageLoader;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Weapon extends Pane {
@@ -21,7 +27,7 @@ public class Weapon extends Pane {
 	private int atk = 0;
 	private int direction;
 	private int height = 32;
-	
+
 	public boolean thrown = false;
 	
 	public SpriteAnimation animation;
@@ -69,7 +75,6 @@ public class Weapon extends Pane {
 	public void update(int direction) {
 		if (isPressed(KeyCode.F))
 		{
-	
 			atk ++;
 		}
 		if (atk == 1) {

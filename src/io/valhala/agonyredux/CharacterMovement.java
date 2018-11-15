@@ -11,8 +11,8 @@ import javafx.util.Duration;
 public class CharacterMovement extends Pane {
 //DFA
 	
-	private int count = 4;
-	private int columns = 4;
+	private int count = 3;
+	private int columns = 3;
 	private int offsetX = 0;
 	private int offsetY = 0;
 	private int dir;
@@ -50,11 +50,13 @@ public class CharacterMovement extends Pane {
 			if(right && this.getLayoutX() < 1490)
 			{
 				this.setLayoutX(this.getLayoutX() +1);
-				Game.camera.setTranslateX(Game.camera.getTranslateX() +1);
+				if(Game.camera.getLayoutX() < 750 && this.getLayoutX() > Game.camera.getLayoutX() + 450)
+				Game.camera.setLayoutX(Game.camera.getLayoutX() +1);
 			}
 			else if(this.getLayoutX() > 10) {
-				this.setLayoutX(this.getLayoutX() - 1);
-				Game.camera.setTranslateX(Game.camera.getTranslateX() -1);
+				this.setLayoutX(this.getLayoutX() -1);
+				if(Game.camera.getLayoutX() > -5 && this.getLayoutX() < Game.camera.getLayoutX() + 350)
+				Game.camera.setLayoutX(Game.camera.getLayoutX() -1);
 			}
 				
 		}
@@ -67,11 +69,13 @@ public class CharacterMovement extends Pane {
 		for(int i = 0; i < Math.abs(y); i++) {
 			if (right && this.getLayoutY() < 1490) {
 				this.setLayoutY(this.getLayoutY() +1);
-				Game.camera.setTranslateY(Game.camera.getTranslateY() +1);
+				if(Game.camera.getLayoutY() < 750 && this.getLayoutY() > Game.camera.getLayoutY() + 450)
+					Game.camera.setLayoutY(Game.camera.getLayoutY() +1);
 			}
 				else if(this.getLayoutY() > 10 ){ 
 					this.setLayoutY(this.getLayoutY() -1);
-					Game.camera.setTranslateY(Game.camera.getTranslateY() -1);
+					if (Game.camera.getLayoutY() >= -5 && this.getLayoutY() < Game.camera.getLayoutY() +350)
+						Game.camera.setLayoutY(Game.camera.getLayoutY() -1);
 				}
 		}
 	
@@ -90,7 +94,7 @@ public class CharacterMovement extends Pane {
 			//starts the animation of the sprite
 			this.animation.play(); 
 			//picks the bottom Sprite
-			this.animation.setOffsetY(64);
+			this.animation.setOffsetY(96);
 			//sets the range to decide direction of sprite
 			this.moveY(-2);
 			dir = 3;
@@ -106,7 +110,7 @@ public class CharacterMovement extends Pane {
 		}
 		else if(isPressed(KeyCode.RIGHT) || isPressed(KeyCode.D)) {
 			this.animation.play();
-			this.animation.setOffsetY(96);
+			this.animation.setOffsetY(64);
 			this.moveX(2);
 			dir = 0;
 		}

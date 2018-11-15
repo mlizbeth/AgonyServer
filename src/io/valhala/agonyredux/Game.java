@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 	
 	static Random ran = new Random(System.currentTimeMillis());
 	
-	private static final String PLAYER = "/images/rick2.png";
+	private static final String PLAYER = "/images/viking.png";
 	private static final String ZOMBIE1 = "/images/Zombie1.png";
 	private static final String ZOMBIE2 = "/images/Zombie2.png";
 	private static final String EVILKING = "/images/EvilKing.png";
